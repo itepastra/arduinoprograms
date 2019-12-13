@@ -18,6 +18,3 @@ void loop()
     digitalWrite(LED_BUILTIN, HIGH);
     delay(500);
 }
-
-//hoi
-//ook hallo Tijs
