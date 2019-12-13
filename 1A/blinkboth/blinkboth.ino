@@ -19,4 +19,4 @@ void loop()
     delay(500);
 }
 
-//dit is een tset
+// dit is een tset
