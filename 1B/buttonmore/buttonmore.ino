@@ -148,12 +148,12 @@ void lampjes3()
 
 void lampjes4()
 {
-    for (int i = 0; i <= 250; i++)
+    for (int i = 0; i < 256; i++)
     {
-        analogWrite(LedPin1, i % 250);
-        analogWrite(LedPin2, (i + 50) % 250);
-        analogWrite(LedPin3, (i + 100) % 250);
-        analogWrite(LedPin4, (i + 150) % 250);
+        analogWrite(LedPin1, i % 256);
+        analogWrite(LedPin2, (i + 64) % 256);
+        analogWrite(LedPin3, (i + 128) % 256);
+        analogWrite(LedPin4, (i + 192) % 256);
         delay(4);
     }
 }
