@@ -54,7 +54,7 @@ void loop(){
 void ledjeTemp(float temp){
     digitalWrite(roodLed, LOW);
     digitalWrite(blauwLed,LOW);
-    if (temp < 25){
+    if (temp < 23){
         digitalWrite(roodLed,HIGH);
     } else if (temp > 28){
         digitalWrite(blauwLed,HIGH);
