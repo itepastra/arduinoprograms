@@ -32,7 +32,7 @@ void setup(){
     // if the  file  opened  okay , WRITE  to it:
     if (myFile) 
     {
-        myFile.println("#meting\tnummer\tmeettijd\ttemp\tpressure\thumidity");
+        myFile.println("#meting\tmeettijd\ttemp\tpressure\thumidity");
         myFile.close();
     } else {// if the  file didn ’t open , print  an error:
         Serial.println("error  opening  meet.txt");
