@@ -5,16 +5,21 @@
 
 #include  <SPI.h>
 #include  <SD.h>// "const" means  constant: this  value  will  not  change// This  will  allow  the  compiler  to  optimizeconst  
-int  csPin;
+int  csPin = 10;
 File  myFile;
+
+
 void  setup () 
 {// Open  serial  communications  and  wait  for  port to open:
     Serial.begin (9600);
     Serial.print (" Initializing  SD card ...");
-    if (!SD.begin(csPin )) 
-    {Serial.println (" initialization  failed !");return;}
-    Serial.println (" initialization  done .");// Open  the  file  for  
-    WRITING.myFile = SD.open("test.txt", FILE_WRITE );
+    if (!SD.begin(csPin))
+    {
+        Serial.println (" initialization  failed !");
+        return;
+    }
+    Serial.println (" initialization  done .");// Open  the  file  for  WRITING.
+    myFile = SD.open("test.txt", FILE_WRITE);
 
     // if the  file  opened  okay , WRITE  to it:
     if (myFile) 
@@ -43,7 +48,8 @@ void  setup ()
 
 void  loop()
 {//if  statement  missing//
-    int rem = SD.remove("test.txt ");// this  removes  the  file// 
-    Serial.print(" removing  the file , status: ");
-    Serial.println(rem);
+    // int rem = SD.remove("test.txt ");// this  removes  the  file// 
+    // Serial.print(" removing  the file , status: ");
+    // Serial.println(rem);
+    // delay(500);
 }
