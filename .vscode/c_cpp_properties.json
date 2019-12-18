@@ -1,0 +1,30 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/Users/user/AppData/Local/Arduino15/packages/arduino/hardware/avr/1.8.2/libraries/Adafruit_BME280",
+                "C:/Users/user/AppData/Local/Arduino15/packages/arduino/hardware/avr/1.8.2/libraries/Adafruit_Sensor",
+                "C:/Users/user/AppData/Local/Arduino15/packages/arduino/hardware/avr/1.8.2/libraries/EEPROM",
+                "C:/Users/user/AppData/Local/Arduino15/packages/arduino/hardware/avr/1.8.2/libraries/HID",
+                "C:/Users/user/AppData/Local/Arduino15/packages/arduino/hardware/avr/1.8.2/libraries/SoftwareSerial",
+                "C:/Users/user/AppData/Local/Arduino15/packages/arduino/hardware/avr/1.8.2/libraries/SPI",
+                "C:/Users/user/AppData/Local/Arduino15/packages/arduino/hardware/avr/1.8.2/libraries/Wire",
+                "C:/Users/user/AppData/Local/Arduino15/packages/arduino/hardware/avr/1.8.2/libraries/RTCLib",
+                "C:/Users/user/AppData/Local/Arduino15/packages/arduino/hardware/avr/1.8.2/cores/arduino"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.18362.0",
+            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.23.28105/bin/Hostx64/x64/cl.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "msvc-x64"
+        }
+    ],
+    "version": 4
+}

@@ -1,0 +1,6 @@
+#meting	meettijd	temperatuur	druk	relatieve luchtvochtigheid
+1	001	20	100000	90
+2	500	21	99000	85
+3	1000	22	101000	74
+4	1500	23	102000	60
+5	2000	24	100000	50

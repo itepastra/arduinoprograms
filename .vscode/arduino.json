@@ -1,6 +1,6 @@
 {
     "programmer": "AVR ISP",
     "board": "arduino:avr:uno",
-    "sketch": "2B\\sensorkaart\\sensorkaart.ino",
+    "sketch": "2B\\tempandtime\\tempandtime.ino",
     "port": "COM3"
 }
