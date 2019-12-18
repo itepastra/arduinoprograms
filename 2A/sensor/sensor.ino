@@ -44,22 +44,27 @@ void loop(){
     Serial.print(" Humidity :\t");
     Serial.println(lastH );
     Serial.println();
-    ledje(lastT);
+    ledjeTemp(lastT);
+    ledjeHumid(lastH);
     //  Delay  time  before  next  loopdelay
     delay(delayT);
 }
 
 
-void ledje(float temp){
+void ledjeTemp(float temp){
     digitalWrite(roodLed, LOW);
-    digitalWrite(groenLed,LOW);
     digitalWrite(blauwLed,LOW);
-    if (temp <= 23){
+    if (temp < 25){
         digitalWrite(roodLed,HIGH);
-    } else if (temp < 28){
-        digitalWrite(groenLed,HIGH);
-    } else {
+    } else if (temp > 28){
         digitalWrite(blauwLed,HIGH);
     }
 
+}
+
+void ledjeHumid(float humid){
+    digitalWrite(groenLed,LOW);
+    if (humid < 65){
+        digitalWrite(groenLed,HIGH);
+    }
 }
