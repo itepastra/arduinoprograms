@@ -1,70 +1,47 @@
-#include  <Wire.h>;//  enables  hardware  I2C 
-#include  <Adafruit_Sensor.h>;   //  loads  Adafruit  Sensor  definitions
-#include  <Adafruit_BME280.h>;   //  loads  the  Adafruit
+#include <Wire.h>            //  enables  hardware  I2C
+#include <Adafruit_Sensor.h> //  loads  Adafruit  Sensor  definitions
+#include <Adafruit_BME280.h> //  loads  the  Adafruit
+#include <LiquidCrystal.h>
 
+// initialize the library with the numbers of the interface pins
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 Adafruit_BME280  bme;// This  object  will  control  the  sensor
-unsigned  int  delayT;// Here we store  the  delay  between  msgs
+unsigned  int  delayT = 100;// Here we store  the  delay  between  msgs
 float  lastT , lastP , lastH;
 
-int roodLed = 10;
-int groenLed = 11;
-int blauwLed = 9;
 
-
-void setup(){
-    Serial.begin(9600);
-    while(!Serial){};
-
-    pinMode(roodLed,OUTPUT);
-    pinMode(groenLed,OUTPUT);
-    pinMode(blauwLed,OUTPUT);
-
-
+void setup()
+{
+    // set up the LCD's number of columns and rows:
+    lcd.begin(16, 2);
+    // Print a message to the LCD.
+    lcd.setCursor(0, 0);
+    lcd.print("temp: ");
+    lcd.setCursor(0,1);
+    lcd.print("humid: ");
     int status = bme.begin(0x76);
-    if(!status){
+    if (!status)
+    {
         Serial.println("couldnt find sensor");
         Serial.print("check wiring, Error:");
         Serial.println(status);
-        while(1){};
+        while (1)
+        {
+        };
     }
-    Serial.println("yay t werkt");
-    delayT = 5000;
 }
 
-void loop(){
+void loop()
+{
     lastT = bme.readTemperature();
-    lastP = bme.readPressure();
-    lastH=bme.readHumidity();
+    lastH = bme.readHumidity();
 
-    Serial.println("Data  from  sensor :");
-    Serial.print(" Temperature :\t");
-    Serial.println(lastT );
-    Serial.print(" Pressure :\t");
-    Serial.println(lastP );
-    Serial.print(" Humidity :\t");
-    Serial.println(lastH );
-    Serial.println();
-    ledjeTemp(lastT);
-    ledjeHumid(lastH);
-    //  Delay  time  before  next  loopdelay
+    // set the cursor to column 0, line 1
+    // (note: line 1 is the second row, since counting begins with 0):
+    lcd.setCursor(6, 0);
+    lcd.print(lastT);
+    lcd.setCursor(7,1);
+    lcd.print(lastH);
+    // print the number of seconds since reset:
     delay(delayT);
-}
-
-
-void ledjeTemp(float temp){
-    digitalWrite(roodLed, LOW);
-    digitalWrite(blauwLed,LOW);
-    if (temp < 23){
-        digitalWrite(roodLed,HIGH);
-    } else if (temp > 28){
-        digitalWrite(blauwLed,HIGH);
-    }
-
-}
-
-void ledjeHumid(float humid){
-    digitalWrite(groenLed,LOW);
-    if (humid < 65){
-        digitalWrite(groenLed,HIGH);
-    }
 }
