@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import datetime as dt
 
 def plotheader(str):
     pass
@@ -10,6 +11,7 @@ def plotdata(matrix):
     temp = matrix[:,2]
     pres = matrix[:,3]
     humid = matrix[:,4] 
+    meettijd = np.asarray(meettijd, dtype='datetime64[s]')
 
     fig, ax1 = plt.subplots(figsize=(8,4))
     fig.subplots_adjust(right=0.75)
@@ -25,9 +27,6 @@ def plotdata(matrix):
     l2, = ax2.plot(meettijd, pres,label="druk", color='black', ls="dashed")
     l3, = ax3.plot(meettijd,humid,label="luchtvochtigheid", color='blue', ls='dotted')
 
-    ax1.set_xlim(0)
-    ax2.set_xlim(0)
-    ax3.set_xlim(0)
 
     ax1.set_xlabel("$t$ (ms)")
     ax1.set_ylabel('temperatuur')
