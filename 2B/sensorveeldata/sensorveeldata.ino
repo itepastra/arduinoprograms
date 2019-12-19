@@ -20,11 +20,6 @@ float lastT1, lastT2, lastP, lastH;
 void setup()
 {
 
-#ifndef ESP8266
-	while (!Serial)
-		; // for Leonardo/Micro/Zero
-#endif
-
 	Serial.begin(9600);
 
 	delay(3000); // wait for console opening
@@ -57,14 +52,13 @@ void setup()
 	if (myFile)
 	{
 		// door deze header die onderaan de file komt kunnen we ook meteen zien waar de arduino uit is geweest.
-		myFile.println("#"+String(begintijd.unixtime())+"\tmeting\tmeettijd\ttemp\tpressure\thumidity");
+		myFile.println("#" + String(begintijd.unixtime()) + "\tmeting\tmeettijd\ttemp\tpressure\thumidity");
 		myFile.close();
 	}
 	else
 	{ // if the  file didn ’t open , print  an error:
 		Serial.println("error  opening  meetmeer.txt");
 	} // Re-open  the  file  for  reading:
-
 }
 
 void loop()

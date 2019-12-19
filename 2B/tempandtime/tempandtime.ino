@@ -10,22 +10,15 @@ const String tab = "\t";
 RTC_DS3231 rtc;
 Adafruit_BME280 bme;
 float lastT1, lastT2, lastP, lastH;
-String tab = "\t"
 
-	void
-	setup()
+void setup()
 {
-
-#ifndef ESP8266
-	while (!Serial)
-		; // for Leonardo/Micro/Zero
-#endif
 
 	Serial.begin(9600);
 
 	delay(3000); // wait for console opening
 
-	if (!rtc.begin(0x68))
+	if (!rtc.begin())
 	{
 		Serial.println("Couldn't find RTC");
 		while (1)
@@ -34,7 +27,7 @@ String tab = "\t"
 	}
 	if (!bme.begin(0x76))
 	{
-		Serial.println("de klok is kwijt")
+		Serial.println("de klok is kwijt");
 	}
 
 	if (rtc.lostPower())
@@ -54,11 +47,11 @@ void loop()
 	lastT1 = bme.readTemperature();
 	lastT2 = rtc.getTemperature();
 
-	Serial.print("de temperatuur is:")
-		Serial.print(lastT1)
-			Serial.print(" C volgens de BME280 en ")
-				Serial.print(lastT2)
-					Serial.println(" C volgens de RTC")
+	Serial.print("de temperatuur is: ");
+	Serial.print(lastT1);
+	Serial.print(" C volgens de BME280 en ");
+	Serial.print(lastT2);
+	Serial.println(" C volgens de RTC");
 
-						delay(delayT);
+	delay(delayT);
 }
