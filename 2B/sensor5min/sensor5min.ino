@@ -4,7 +4,7 @@
 #include <SPI.h>
 #include <SD.h>
 
-int csPin = 10;
+int csPin = 10; // dit is de pin die aan de CS pin van de sdkaartlezer zit
 File myFile;
 int n = 0;
 const unsigned int delayT = 5000;
@@ -16,6 +16,7 @@ float lastT, lastP, lastH;
 void setup()
 {
     Serial.begin(9600);
+
     Serial.print(" Initializing  SD card ...");
     if (!SD.begin(csPin))
     {
@@ -23,13 +24,18 @@ void setup()
         return;
     }
     Serial.println(" initialization  done ."); // Open  the  file  for  WRITING.
-    del = SD.remove("meet.txt") if (del){
-        Serial.println("old file removed")} myFile = SD.open("meet.txt", FILE_WRITE);
+
+    del = SD.remove("meet.txt"); // we verwijderen de oude meet.txt zodat we altijd met een leeg bestand beginnen
+    if (del)                     // dit is waar als het bestand kon worden verwijdert
+    {
+        Serial.println("old file removed")
+    }
+    myFile = SD.open("meet.txt", FILE_WRITE); //  hier openen we meet.txt vervolgens weer
 
     // if the  file  opened  okay , WRITE  to it:
     if (myFile)
     {
-        myFile.println("#meting\tmeettijd\ttemp\tpressure\thumidity");
+        myFile.println("#meting\tmeettijd\ttemp\tpressure\thumidity"); // we maken een header zodat we de data kunnen lezen
         myFile.close();
     }
     else
@@ -37,7 +43,7 @@ void setup()
         Serial.println("error  opening  meet.txt");
     } // Re-open  the  file  for  reading:
 
-    int status = bme.begin(0x76);
+    int status = bme.begin(0x76); // als de bme niet kan beginnen printen we dit en gaan we in een infinite loop
     if (!status)
     {
         Serial.println("couldnt find sensor");
@@ -60,15 +66,7 @@ void loop()
     {
         n++;
         Serial.println(n);
-        myFile.print(n);
-        myFile.print(tab);
-        myFile.print(millis());
-        myFile.print(tab);
-        myFile.print(lastT);
-        myFile.print(tab);
-        myFile.print(lastP);
-        myFile.print(tab);
-        myFile.println(lastH);
+        myFile.print(String(n) + tab + String(millis()) + tab + String(lastT) + tab + String(lastP) + tab + String(lastH));
         myFile.close();
     }
     else

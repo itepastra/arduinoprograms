@@ -52,15 +52,18 @@ void loop()
     {
         Serial.println("Versie 5");
         lampjes5();
-    }else if (versie == 6)
+    }
+    else if (versie == 6)
     {
         Serial.println("Versie 6");
         lampjes6();
-    }else if (versie == 7)
+    }
+    else if (versie == 7)
     {
         Serial.println("Versie 7");
         lampjes7();
-    }else if (versie == 8)
+    }
+    else if (versie == 8)
     {
         Serial.println("Versie 8");
         lampjes8();
@@ -69,17 +72,15 @@ void loop()
 
 void InterruptSwitch()
 {
- static unsigned long last_interrupt_time = 0;
- unsigned long interrupt_time = millis();
- // If interrupts come faster than 200ms, assume it's a bounce and ignore
- if (interrupt_time - last_interrupt_time > 200)
- {
-   versie = (versie + 1) % VersieAantal;
- }
- last_interrupt_time = interrupt_time;
+    static unsigned long last_interrupt_time = 0;
+    unsigned long interrupt_time = millis();
+    // If interrupts come faster than 200ms, assume it's a bounce and ignore
+    if (interrupt_time - last_interrupt_time > 200)
+    {
+        versie = (versie + 1) % VersieAantal;
+    }
+    last_interrupt_time = interrupt_time;
 }
-    
-
 
 void lampjes0()
 {
@@ -175,55 +176,58 @@ void lampjes4()
     }
 }
 
-void lampjes5(){
+void lampjes5()
+{
     for (int i = 0; i < 512; i++)
     {
         analogWrite(LedPin1, i % 256);
         analogWrite(LedPin2, (i + 128) % 256);
-        analogWrite(LedPin3, i% 256);
+        analogWrite(LedPin3, i % 256);
         analogWrite(LedPin4, (i + 128) % 256);
         delay(2);
     }
 }
 
-void lampjes6(){
-    digitalWrite(LedPin1,HIGH);
-    digitalWrite(LedPin3,HIGH);
+void lampjes6()
+{
+    digitalWrite(LedPin1, HIGH);
+    digitalWrite(LedPin3, HIGH);
     delay(250);
-    digitalWrite(LedPin1,LOW);
-    digitalWrite(LedPin2,HIGH);
-    digitalWrite(LedPin3,LOW);
-    digitalWrite(LedPin4,HIGH);
+    digitalWrite(LedPin1, LOW);
+    digitalWrite(LedPin2, HIGH);
+    digitalWrite(LedPin3, LOW);
+    digitalWrite(LedPin4, HIGH);
     delay(250);
-    digitalWrite(LedPin2,LOW);
-    digitalWrite(LedPin4,LOW);
-
+    digitalWrite(LedPin2, LOW);
+    digitalWrite(LedPin4, LOW);
 }
-void lampjes7(){
-    digitalWrite(LedPin1,HIGH);
+void lampjes7()
+{
+    digitalWrite(LedPin1, HIGH);
     delay(100);
-    digitalWrite(LedPin2,HIGH);
+    digitalWrite(LedPin2, HIGH);
     delay(100);
-    digitalWrite(LedPin3,HIGH);
+    digitalWrite(LedPin3, HIGH);
     delay(100);
-    digitalWrite(LedPin4,HIGH);
+    digitalWrite(LedPin4, HIGH);
     delay(100);
-    digitalWrite(LedPin1,LOW);
+    digitalWrite(LedPin1, LOW);
     delay(100);
-    digitalWrite(LedPin2,LOW);
+    digitalWrite(LedPin2, LOW);
     delay(100);
-    digitalWrite(LedPin3,LOW);
+    digitalWrite(LedPin3, LOW);
     delay(100);
-    digitalWrite(LedPin4,LOW);
+    digitalWrite(LedPin4, LOW);
     delay(100);
 }
 
-void lampjes8(){
+void lampjes8()
+{
     for (int i = 0; i < 512; i++)
     {
         analogWrite(LedPin1, i % 256);
         analogWrite(LedPin2, (i + 128) % 256);
-        analogWrite(LedPin3, (i% 256));
+        analogWrite(LedPin3, (i % 256));
         analogWrite(LedPin4, (i + 128) % 256);
         delay(2);
     }

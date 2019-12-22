@@ -24,10 +24,12 @@ void setup()
 
 	delay(3000); // wait for console opening
 
-	if (!bme.begin(0x76))
+	if (!bme.begin(0x76)) // als de BME280 niet kan initializen geeft ie een error op serial
 	{
-		Serial.println("de klok is kwijt");
+		Serial.println("kan de BME niet vinden");
 	}
+
+	// hier starten we de sdkaart lezer
 	Serial.print(" Initializing  SD card ...");
 	if (!SD.begin(csPin))
 	{
@@ -36,14 +38,11 @@ void setup()
 	}
 	Serial.println(" initialization  done ."); // Open  the  file  for  WRITING.
 
-	if (rtc.lostPower())
+	if (rtc.lostPower()) // als de RTC z'n batterij even kwijt was zetten we de tijd op de tijd van compilen
 	{
 		Serial.println("RTC lost power, lets set the time!");
 		// following line sets the RTC to the date & time this sketch was compiled
 		rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-		// This line sets the RTC with an explicit date & time, for example to set
-		// January 21, 2014 at 3am you would call:
-		// rtc.adjust(DateTime(2014, 1, 21, 3, 0, 0));
 	}
 	begintijd = rtc.now(); //de tijd waarop we de arduino opstarten is de begintijd
 
@@ -51,7 +50,7 @@ void setup()
 	// if the  file  opened  okay , WRITE  to it:
 	if (myFile)
 	{
-		// door deze header die onderaan de file komt kunnen we ook meteen zien waar de arduino uit is geweest.
+		// door deze header die in de file komt bij het opstarten kunnen we ook meteen zien waar de arduino uit is geweest.
 		myFile.println("#" + String(begintijd.unixtime()) + "\tmeting\tmeettijd\ttemp\tpressure\thumidity");
 		myFile.close();
 	}
@@ -63,28 +62,18 @@ void setup()
 
 void loop()
 {
-	DateTime now = rtc.now();
-	lastT1 = bme.readTemperature();
-	lastT2 = rtc.getTemperature();
-	lastP = bme.readPressure();
-	lastH = bme.readHumidity();
+	DateTime now = rtc.now();		//huidige tijd volgens de RTC
+	lastT1 = bme.readTemperature(); // huidige temperatuur volgens de BME
+	lastT2 = rtc.getTemperature();  // huidige temperatuur volgens de RTC
+	lastP = bme.readPressure();		// huidige druk volgens BME
+	lastH = bme.readHumidity();		// huidige luchtvochtigheid volgens de BME
 
 	myFile = SD.open("meetmeer.txt", FILE_WRITE);
 	if (myFile)
 	{
 		n++;
 		Serial.println(n);
-		myFile.print(n);
-		myFile.print(tab);
-		myFile.print(now.unixtime());
-		myFile.print(tab);
-		myFile.print(lastT1);
-		myFile.print(tab);
-		myFile.print(lastT2);
-		myFile.print(tab);
-		myFile.print(lastP);
-		myFile.print(tab);
-		myFile.println(lastH);
+		myFile.print(String(n) + tab + String(now.unixtime()) + tab + String(lastT1) + tab + String(lastT2) + tab + String(lastP) + tab + String(lastH));
 		myFile.close();
 	}
 	else

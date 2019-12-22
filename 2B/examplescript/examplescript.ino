@@ -32,6 +32,7 @@ void setup()
 
 void loop()
 {
+  // deze loop print elke 3 seconden de tijd volgens de RTC
   DateTime now = rtc.now();
 
   Serial.print(now.year(), DEC);
