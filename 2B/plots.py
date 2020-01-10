@@ -6,7 +6,7 @@ def plotheader(str):
     pass
 
 def plotdata(matrix):
-    meting = matrix[:,0]
+    # meting = matrix[:,0]
     meettijd = matrix[:,1]
     temp = matrix[:,2]
     pres = matrix[:,3]
