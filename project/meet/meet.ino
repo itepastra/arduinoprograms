@@ -4,7 +4,7 @@
 #include <Adafruit_BME280.h> //  loads  the  Adafruit
 #include <SPI.h>
 #include <SD.h>
-
+//hoi
 const String tab = "\t";
 const int csPin = 10;
 const int AnalogMicIn = A0;
