@@ -31,7 +31,7 @@ void setup()
 
 	delay(3000); // wait for console opening
 
-	Serial.begin(250000); // Serial output with 9600 bps
+	Serial.begin(9600); // Serial output with 9600 bps
 
 	if (!bme.begin(0x76)) // als de BME280 niet kan initializen geeft ie een error op serial
 	{
@@ -66,47 +66,8 @@ void setup()
 
 void loop()
 {
-	unsigned long startMillis = millis(); // Start of sample window
-	unsigned int peakToPeak = 0;		  // peak-to-peak level
-	unsigned int signalMax = 0;
-	unsigned int signalMin = 1024;
-
-	while (millis() - startMillis < sampleWindow)
-	{
-		sample = analogRead(AnalogMicIn);
-		if (sample < 1024 * 50) // toss out spurious readings
-		{
-			if (sample > signalMax)
-			{
-				signalMax = sample; // save just the max levels
-			}
-			else if (sample < signalMin)
-			{
-				signalMin = sample; // save just the min levels
-			}
-		}
-	}
-
-	peakToPeak = signalMax - signalMin;		  // max - min = peak-peak amplitude
-	double volts = (peakToPeak * 5.0) / 1024; // convert to volts
-	Serial.println(String(signalMax) + tab + String(peakToPeak) + tab + String(volts));
-
-	lastP = bme.readPressure();
-	lastT = bme.readTemperature();
-	lastH = bme.readHumidity();
-
-	myFile = SD.open("meetales.txt", FILE_WRITE);
-	if (myFile)
-	{
-		n++;
-		Serial.println(n);
-		myFile.println(String(n) + tab + String(millis()) + tab + String(lastT) + tab + String(lastH) + tab + String(lastP) + tab + String(analog) + tab + String(digital));
-		myFile.close();
-	}
-	else
-	{
-		Serial.println("file fout");
-	}
+	analog = analogread(AnalogMicIn);
+	digital = digitalread(DigitalMicIn);
 
 	Serial.println("Entering loop!");
 
@@ -116,11 +77,11 @@ void loop()
 	delay(500);
 	for (int i = 0; i < 9; i++)
 	{
-		//Serial.println("In loop");
+		Serial.println("In loop");
 		while (!CSerial.available())
 			;
 		// wait for a character
-		//Serial.println("Rcv");
+		Serial.println("Rcv");
 		int incomingByte = CSerial.read();
 		Serial.print(incomingByte, HEX);
 		Serial.print(' ');
@@ -132,16 +93,31 @@ void loop()
 			Temperature = incomingByte;
 	}
 	sensorValue = sensorValueH * 256 + sensorValueL;
-	Serial.println();
-	Serial.print("CO2 concentration: ");
-	Serial.print(sensorValue);
-	Serial.print("\nTMH-19: ");
-	Serial.print(Temperature - 40);
-	Serial.print("\tTBME280: ");
-	Serial.println(bme.readTemperature());
-	Serial.print("PBME280: ");
-	Serial.println(bme.readPressure() / 100.0F);
-	Serial.print("HBME280: ");
-	Serial.println(bme.readHumidity());
-	Serial.println();
+
+	myFile = SD.open("meetales.txt", FILE_WRITE);
+	if (myFile)
+	{
+		n++;
+		myFile.print(n);
+		myFile.print(tab);
+		myFile.print(millis());
+		myFile.print(tab);
+		myFile.print(bme.readTemperature());
+		myFile.print(tab);
+		myFile.print(bme.readHumidity());
+		myFile.print(tab);
+		myFile.print(bme.readPressure());
+		myFile.print(tab);
+		myFile.print(sensorValue);
+		myFile.print(tab);
+		myFile.print(analog);
+		myFile.print(tab);
+		myFile.print(digital));
+		myFile.close();
+	}
+	else
+	{
+		Serial.println("file fout");
+	}
+
 }
